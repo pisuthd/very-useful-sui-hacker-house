@@ -57,3 +57,51 @@ Vector operations charge gas on a per-element basis, and are more expensive than
         };
     }
 ```
+
+###  Short Circuit
+
+When using the logical connective AND `(&&)`, if the first expression evaluates to `false`, then the second expression will not be evaluated. Likewise, when using the logical connective OR `(||)`, if the first expression evaluates to true, then the second expression will not be evaluated. Thus, continued expressions in if-statements and while-loops should be ordered by increasing gas cost. If a cheap expression short-circuits the condition check, then we save on evaluating the more expensive expressions.
+
+```
+module move_gas_optimization::short_circuit {
+
+    public fun expensive_function(): bool {
+        let k:u64 = 0;
+        while (k < 100000) {
+            k = k + 1;
+        };
+        let b: bool = (k == 0);
+        b
+    }
+    // always returns False
+
+    public fun cheap_function(): bool {
+        let k:u64 = 0;
+        while (k < 10) {
+            k = k + 1;
+        };
+        let b: bool = (k == 0);
+        b
+    }
+    // always returns False
+
+
+    //aptos move run --function-id 'default::short_circuit::no_short_circuit'
+    public entry fun no_short_circuit() {
+        if (expensive_function() && cheap_function()) {
+
+        };
+    }
+    // 2372 MIST
+
+
+    //aptos move run --function-id 'default::short_circuit::short_circuit'
+    public entry fun short_circuit() {
+        if (cheap_function() && expensive_function()) {
+
+        };
+    }
+    // 200 MIST
+
+}
+```
