@@ -12,6 +12,22 @@ The gas used by a transaction consists of summing the gas associated with the si
 
 This section provides both general principles and specific design patterns for optimizing gas consumption in Move smart contracts on Sui. Each principle is accompanied by an example smart contract demonstrating its application.
 
+## Payload Gas Optimization
+
+The gas associated with the payload is typically much less than the gas associated with instructions and global storage. Thus, for most applications, its contribution is negligible. However, if the payload greatly exceeds 600 bytes, then it may cause a noticeable increase due to Sui large transaction penalty. We give the following general principles for payload
+gas optimization
+
+### Minimize the Length of Modules 
+The code of a published module is stored on the blockchain, which consumes gas. Minimizing the length of the module, i.e. the number of bytes required to store its bytecode, reduces the total gas cost.
+
+### Minimize the Size of Parameters 
+When executing a transaction script, the payload may contain the values of the parameters given by the user, which are stored on the blockchain and thus consumes gas. For example, combining many small functions that require a lot of parameters into one larger function, and also avoiding passing resources as parameters into functions.
+
+## Instruction Gas Optimization
+
+The gas associated with virtual machine instructions. In general, less virtual machine operations mean less gas consumption. However, this is not always possible without sacrificing the
+necessary functionality. We give the following general principles for instruction gas optimization
+
 ### Minimize Vector Element Operations
 
 Vector operations charge gas on a per-element basis, and are more expensive than operations on local variables. Thus, accessing vectors can be treated like accessing the global state.
