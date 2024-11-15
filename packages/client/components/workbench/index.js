@@ -6,8 +6,18 @@ import TEMPLATES from "../../data/templates.json"
 import { useCallback, useState } from "react"
 import { slugify } from "@/helpers"
 import TaskList from "./taskList"
+import { Suspense } from 'react'
+
 
 const WorkbenchContainer = () => {
+    return (
+        <Suspense>
+            <WorkbenchContainerInner/>
+        </Suspense>
+    )
+}
+
+const WorkbenchContainerInner = () => {
 
     const [tasks, setTasks] = useState([])
     const [active, setActive] = useState()
@@ -84,12 +94,7 @@ const WorkbenchContainer = () => {
 
                 </div>
                 <div className="col-span-2 bg-neutral-900 border-t border-neutral-600 flex flex-col">
-                    {/* <div className="border-neutral-600 border-b flex-1">
-        
-                    </div>
-                    <div className="flex-1">
-        
-                    </div> */}
+                     
                 </div>
 
             </div>
