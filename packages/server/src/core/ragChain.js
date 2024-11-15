@@ -28,6 +28,8 @@ import {
     code,
 } from '@scdev/declarative-markdown';
 
+import { PriceServiceConnection } from "@pythnetwork/price-service-client"
+
 dotenv.config()
 
 // A class that handles RAG processing
@@ -70,10 +72,25 @@ class RagChain {
         let count = 0
         let fileIds = []
         for (let url of urls) {
-            const { data } = await axios.get(url)
-            const key = `document-${count}`
-            fileIds.push(key)
-            await this.add(key, Buffer.from(data).toString('base64'))
+
+            if (!url.includes("0x")) {
+                const { data } = await axios.get(url)
+                const key = `document-${count}`
+                fileIds.push(key)
+                await this.add(key, Buffer.from(data).toString('base64'))
+            } else {
+
+                const connection = new PriceServiceConnection("https://hermes.pyth.network")
+                const priceIds = [
+                    url
+                ]
+                const currentPrices = await connection.getLatestPriceFeeds(priceIds);
+                const btcPrice = `Current BTC price observed from Pyth Oracle is $${((Number((currentPrices[0]).emaPrice.price)/100000000)).toFixed(0)} `
+                const key = `document-${count}`
+                fileIds.push(key)
+                await this.add(key, Buffer.from(btcPrice).toString('base64'))
+            }
+
             count = count + 1
         }
         await this.build(fileIds, systemPrompt)
@@ -157,7 +174,7 @@ class RagChain {
             console.log("Building RAG...")
 
             // Build RAG chain
-            await this.init( job.resources, job.system_prompt )
+            await this.init(job.resources, job.system_prompt)
 
             for (let task of job.tasks) {
                 console.log("Querying for:", task.id)

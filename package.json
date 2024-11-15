@@ -10,8 +10,7 @@
         "build": "lerna run --parallel build",
         "package:client": "lerna run --scope client --stream dev",
         "package:server": "lerna run --scope server --stream dev",
-        "test" : "lerna run test --concurrency 1 --stream --scope move",
-        "test-contracts": "lerna run --scope move-automation --stream test"
+        "test" : "lerna run test --concurrency 1 --stream --scope server"
     },
     "devDependencies": {
         "lerna": "^6.6.2",
