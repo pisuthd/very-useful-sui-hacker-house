@@ -16,6 +16,7 @@ import { getFullnodeUrl } from "@mysten/sui/client";
 import "@mysten/dapp-kit/dist/index.css";
 import Loading from '@/components/loading';
 import AccountProvider from "../contexts/account"
+import ServerProvider from "../contexts/server"
 import { registerStashedWallet } from "@mysten/zksend";
 
 const { networkConfig } = createNetworkConfig({
@@ -68,23 +69,25 @@ export function Providers({ children }) {
                     networks={networkConfig}
                     defaultNetwork={"testnet"}
                 >
-                    <WalletProvider
-                        autoConnect
-                        stashedWallet={{
-                            name: "Breaking the Ice - Community Vote",
-                        }}
-                        storage={sessionStorageAdapter}
-                    >
-                        <EnokiFlowProvider apiKey={process.env.ENOKI_API_KEY}>
-                            <AccountProvider>
-                                {/* screen loader  */}
-                                {showLoader && (
-                                    <Loading />
-                                )}
-                                {children}
-                            </AccountProvider>
-                        </EnokiFlowProvider>
-                    </WalletProvider>
+                    <ServerProvider>
+                        <WalletProvider
+                            autoConnect
+                            stashedWallet={{
+                                name: "Breaking the Ice - Community Vote",
+                            }}
+                            storage={sessionStorageAdapter}
+                        >
+                            <EnokiFlowProvider apiKey={process.env.ENOKI_API_KEY}>
+                                <AccountProvider>
+                                    {/* screen loader  */}
+                                    {showLoader && (
+                                        <Loading />
+                                    )}
+                                    {children}
+                                </AccountProvider>
+                            </EnokiFlowProvider>
+                        </WalletProvider>
+                    </ServerProvider>
                 </SuiClientProvider>
             </QueryClientProvider>
         </>

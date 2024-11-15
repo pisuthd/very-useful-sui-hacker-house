@@ -7,7 +7,7 @@ const LoginPanel = () => {
     const { isConnected, redirectToAuthUrl, logout } = useContext(AccountContext)
 
     return (
-        <div className="my-0.5">
+        <div className="my-auto">
 
             {!isConnected && (
                 <button onClick={() => {

@@ -10,12 +10,12 @@ const Header = () => {
     const path = usePathname()
 
     return (
-        <div className="h-[40px] flex flex-row w-full py-2">
+        <div className="h-[60px] flex flex-row w-full py-2 z-10 ">
             <div className="flex-1">
 
             </div>
             <div className="flex-1 flex flex-row">
-                <div className="mx-auto space-x-[40px] py-2">
+                <div className="mx-auto my-auto space-x-[40px] py-2">
                     <Link href="/" className={`  ${path === "/" ? "font-semibold" : "opacity-60 hover:opacity-100"} `}>
                         Dashboard
                     </Link>

@@ -16,7 +16,7 @@ const AccountContainer = () => {
 
     return (
         <>
-            <div className="w-full max-w-sm mx-auto bg-neutral-800 rounded-lg p-4 py-8 mt-[20px] min-h-[250px] flex flex-col">
+            <div className="w-full max-w-lg mx-auto bg-neutral-800 rounded-lg p-4 py-8 mt-[20px] min-h-[250px] flex flex-col">
  
                 {!isConnected && (
                     <div className="m-auto text-center">
@@ -24,7 +24,7 @@ const AccountContainer = () => {
                     </div>
                 )}
 
-                { isConnected && (
+                {isConnected && (
                     <div className="grid grid-cols-1 gap-3">
                         <div className="flex flex-col">
                             <h2 className="text-sm mb-2 text-neutral-400">Email address</h2>

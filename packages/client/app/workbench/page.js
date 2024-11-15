@@ -1,9 +1,10 @@
+import WorkbenchContainer from "@/components/workbench";
 
 
 export default function Workbench() {
     return (
         <div>
-            TBD
+            <WorkbenchContainer/>
         </div>
     )
 }

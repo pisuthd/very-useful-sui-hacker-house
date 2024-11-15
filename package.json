@@ -9,7 +9,9 @@
         "start": "run-p --print-label package:*",
         "build": "lerna run --parallel build",
         "package:client": "lerna run --scope client --stream dev",
-        "test": "lerna run --scope move-automation --stream test"
+        "package:server": "lerna run --scope server --stream dev",
+        "test" : "lerna run test --concurrency 1 --stream --scope move",
+        "test-contracts": "lerna run --scope move-automation --stream test"
     },
     "devDependencies": {
         "lerna": "^6.6.2",
