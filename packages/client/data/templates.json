@@ -1,13 +1,5 @@
 [
     {
-        "name": "Liquidation Protection",
-        "description": "A template to monitors collateral positions and proactively prevents liquidations by adjusting loan parameters or adding collateral based on real-time market data provided by Pyth Oracle",
-        "system_prompt":"",
-        "user_prompt" : "",
-        "example" : "",
-        "resources" : []
-    },
-    {
         "name": "Gas Optimization",
         "description": "A template to analyze and optimize Move smart contract code, minimizing gas costs while maintaining efficiency, ensuring cost-effective interactions on the Sui blockchain",
         "system_prompt" : "You are an AI agent assigned to suggest improvements on the provided source code. Use the following pieces of context to answer the question without referring to the example source code. Use a maximum of two paragraph and maintain a formal tone to ensure it is suitable for inclusion in a security report. \n\nContext: {context}",
@@ -38,9 +30,11 @@
     {
         "name": "Outcome Segmentation",
         "description": "Segregating price prediction outcomes into defined segments (e.g., A, B, C, D) to provide clearer insights and actionable data for any market prediction project utilizing Pyth Oracle's real-time data",
-        "system_prompt" : "",
-        "user_prompt" : "",
-        "example" : "",
-        "resources" : []
+        "system_prompt" : "You are an AI agent tasked with delivering insights for outcome segmentation in DeFi market predictions. Use the provided context to generate your response. \n\nContext: {context}",
+        "user_prompt" : "Based on the current BTC price fetched from Pyth Oracle, suggest outcome ranges.\nFor example: A: <$60,000, B: $60,000-$70,000, C: $70,000-$80,000, D: >$80,000.",
+        "examples" : [],
+        "resources" : [
+            "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43"
+        ]
     }
 ]

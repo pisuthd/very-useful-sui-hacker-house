@@ -3,6 +3,8 @@ import { X, Plus } from "react-feather"
 import { useEffect, useState } from 'react'
 import axios from "axios";
 import Editor from '@monaco-editor/react';
+import { PriceServiceConnection } from "@pythnetwork/price-service-client"
+
 
 const MarkdownPanel = ({ resource, value }) => {
 
@@ -12,8 +14,20 @@ const MarkdownPanel = ({ resource, value }) => {
 
         (async () => {
             if (!value) {
-                const { data } = await axios.get(resource)
-                setData(data)
+
+                if (!resource.includes("0x")) {
+                    const { data } = await axios.get(resource)
+                    setData(data)
+                } else {
+                    const connection = new PriceServiceConnection("https://hermes.pyth.network")
+                    const priceIds = [
+                        resource
+                    ]
+                    const currentPrices = await connection.getLatestPriceFeeds(priceIds);
+                    const btcPrice = `Current BTC price observed from Pyth Oracle is $${((Number((currentPrices[0]).emaPrice.price) / 100000000)).toFixed(0)} `
+                    setData(btcPrice)
+                }
+
             }
 
         })()
@@ -44,7 +58,12 @@ const TaskList = ({ tasks, active, setActive, removeTask, newTask, onSave }) => 
                     let title
 
                     if (t.type === "context") {
-                        title = t.resource.split("/").pop()
+                        if (!t.resource.includes("0x")) {
+                            title = t.resource.split("/").pop()
+                        } else {
+                            title = "Pyth BTC Feed"
+                        }
+
                     }
 
                     if (t.type === "input" || t.type === "report") {

@@ -89,7 +89,8 @@ const LeftPanel = ({ addTask, template, tasks, clear }) => {
                                 type: "context",
                                 resource: item
                             })} className="flex-grow cursor-pointer hover:underline">
-                                {item.split("/").pop()}
+                                {!item.includes("0x") && item.split("/").pop()}
+                                {item.includes("0x") && "Pyth BTC Feed"}
                             </div>
                             <div className="w-[30px] flex">
                                 <X size={18} className="m-auto cursor-pointer" />
@@ -146,7 +147,7 @@ const LeftPanel = ({ addTask, template, tasks, clear }) => {
                 onOpen={() => setCurrentConfig(CONFIG.REPORT)}
             >
                 <>
-                    {reports.map((item, index) => { 
+                    {reports.map((item, index) => {
                         return (
                             <div className="text-sm flex flex-row" key={index}>
                                 <div onClick={() => addTask({
